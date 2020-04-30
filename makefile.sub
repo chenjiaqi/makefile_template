@@ -1,0 +1,24 @@
+OUTPUT ?= .
+SUBTARGET ?= local
+TARGET = $(OUTPUT)/$(SUBTARGET).subtars
+
+
+SRCS = $(wildcard  *.c)
+OBJS = $(patsubst %.c, %.o,$(SRCS))
+
+DSTOBJS = $(addprefix $(OUTPUT)/, $(OBJS))
+
+all:$(TARGET)
+	@echo $(TARGET)
+
+$(TARGET):$(DSTOBJS)
+	touch $(TARGET)
+
+$(DSTOBJS):$(OUTPUT)/%.o:%.c
+	@echo !!!!!!!!1 $@ $^
+	gcc -c -o $@ $^
+	touch $(TARGET)
+
+echo:
+	@echo $(DSTOBJS)
+
